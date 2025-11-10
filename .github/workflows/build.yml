@@ -9,12 +9,18 @@ on:
       tag:
         description: "Tag name (example: v1.2.3)"
         required: true
+      build_all:
+        description: "Build all targets (will build only linux32 if unchecked)"
+        required: false
+        default: "false"
+        type: boolean
 
 permissions:
   contents: write
 
 env:
   TAG_NAME: ${{ github.event.inputs.tag || github.ref_name }}
+  BUILD_ALL: ${{ github.event.inputs.build_all || "false" }}
 
 jobs:
   build-linux32:
@@ -52,6 +58,7 @@ jobs:
   build-linux64:
     name: Build Linux x64
     runs-on: ubuntu-latest
+    if: ${{ env.BUILD_ALL == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -78,6 +85,7 @@ jobs:
   build-win32:
     name: Build Windows x32
     runs-on: windows-latest
+    if: ${{ env.BUILD_ALL == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -104,6 +112,7 @@ jobs:
   build-win64:
     name: Build Windows x64
     runs-on: windows-latest
+    if: ${{ env.BUILD_ALL == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
