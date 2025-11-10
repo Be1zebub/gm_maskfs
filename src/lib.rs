@@ -19,7 +19,7 @@ fn gmod_open(lua: LuaState) -> Result<i32> {
 		0
 	}
 
-	lua_pushcfunction(lua, Some(mask_fs_scan));
+	lua_pushcfunction(lua, mask_fs_scan);
 	lua_setglobal(lua, cstr!("mask_fs_scan"));
 
 	Ok(0)
